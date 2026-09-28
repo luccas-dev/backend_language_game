@@ -5,7 +5,7 @@ const database = require('../config/db')
 // ROTA PARA SELECIONAR UMA PALAVRA ALEATORIA
 router.get('/', async (req, res) => {
     try {
-        const [random_word] = await database.query('SELECT id_word, word, difficulty FROM korean_words WHERE difficulty = ? ORDER BY RAND() LIMIT 1', req.query.difficulty)
+        const [random_word] = await database.query('SELECT id_word, word, difficulty FROM korean_words WHERE difficulty = ? ORDER BY RAND() LIMIT 1', [req.query.difficulty])
         res.json(random_word[0])
     } catch(error) {
         console.log(error)
@@ -42,10 +42,9 @@ router.post('/validate', async (req, res) => {
 
 router.post('/save', async (req, res) => {
     const {player_name, difficulty, correct_words, wrong_words} = req.body
-    const dados = [player_name, correct_words, wrong_words, difficulty]
 
     try {
-        await database.query('INSERT INTO game_data (player_name, correct_words, wrong_words, difficulty) VALUES (?, ?, ?, ?)', dados)
+        await database.query('INSERT INTO game_data (player_name, correct_words, wrong_words, difficulty) VALUES (?, ?, ?, ?)', [player_name, correct_words, wrong_words, difficulty])
 
         res.status(200).send('DADOS SALVOS')
     } catch(error) {
