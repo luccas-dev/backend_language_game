@@ -5,7 +5,6 @@ const koreanRoutes = require('./routes/koreanRoutes')
 const gameDataRoutes = require('./routes/gameDataRoutes')
 require('dotenv').config()
 
-
 const app = express()
 
 // MIDDLEWARES

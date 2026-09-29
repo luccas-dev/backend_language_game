@@ -22,7 +22,7 @@ koreanRouter.post('/validate', async (req, res) => {
     }
     
     try {
-        const [word_selected] = await database.query('SELECT accepted_translations FROM korean_words WHERE id_word = ?', [id_word])
+        const [word_selected] = await database.query('SELECT word, accepted_translations FROM korean_words WHERE id_word = ?', [id_word])
 
         if(word_selected.length === 0) {
             return res.status(400).send('Palavra não encontrada.')
@@ -33,7 +33,7 @@ koreanRouter.post('/validate', async (req, res) => {
 
         const correct = translations.includes(lastResponse)
 
-        res.json({correct: correct})
+        res.json({correct: correct, word: word_selected[0].word, translations: translations})
     } catch (error) {
         console.log(error)
         res.status(500).send(error)
