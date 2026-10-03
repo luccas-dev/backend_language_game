@@ -29,6 +29,7 @@ koreanRouter.post('/validate', async (req, res) => {
         }
 
         const translations = word_selected[0].accepted_translations
+        translations = translations.split(',').map(translation => translation.trim().toLowerCase())
         const lastResponse = userResponse.toLowerCase().trim()
 
         const correct = translations.includes(lastResponse)
