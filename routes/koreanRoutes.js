@@ -34,7 +34,7 @@ koreanRouter.post('/validate', async (req, res) => {
 
         const correct = formatedTranslations.includes(lastResponse)
 
-        res.json({correct: correct, word: word_selected[0].word, translations: formatedTranslations})
+        res.json({correct: correct, word: word_selected[0].word, translations: formatedTranslations, response: lastResponse})
     } catch (error) {
         console.log(error)
         res.status(500).send(error)
